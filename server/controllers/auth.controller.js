@@ -67,6 +67,7 @@ exports.registerController = (req, res) => {
          })
         })
     .catch(err =>{
+        console.log('error');
         return res.status(400).json({
             success: false,
             error: errorHandler(err)
@@ -77,4 +78,52 @@ exports.registerController = (req, res) => {
     }
 }
 
-//* Register For backrnd done
+//* Register For backend done
+
+
+//* Activation and save to database
+exports.activationController = (req, res) => {
+    const { token } = req.body;
+
+    if (token) {
+        //Verify the token is valid or not or expired
+        jwt.verify(token, process.env.JWT_ACCOUNT_ACTIVATION, (err, decoded) => {
+            if (err) {
+                console.log('Activation error');
+                return res.status(401).json({
+                    errors: 'Expired Token. Signup again'
+                });
+            } else {
+                //if valid save to database
+                //Get name, email, password from token
+                const { name, email, password } = jwt.decode(token);
+
+                console.log(email);
+                const user = new User({
+                    name,
+                    email,
+                    password
+                });
+
+                user.save((err, user) => {
+                    if (err) {
+                        console.log('Save error', errorHandler(err));
+                        return res.status(401).json({
+                            errors: errorHandler(err)
+                        });
+                    } else {
+                        return res.json({
+                            success: true,
+                            message: 'Signup success',
+                            user
+                        });
+                    }
+                });
+            }
+        });
+    } else {
+        return res.json({
+            message: 'error happening please try again'
+        });
+    }
+};

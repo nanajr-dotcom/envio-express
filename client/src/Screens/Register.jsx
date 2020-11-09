@@ -24,8 +24,11 @@ import { Redirect } from 'react-router-dom'
          e.preventDefault()
          if (name&&email&&password1){
              if(password1 === password2){
-                axios.post(`${process.env.REACT_APP}/register`,{
-                    name,email,password: password1
+                 axios
+                 .post(`${process.env.REACT_APP_API_URL}/register`,{
+                    name,
+                    email,
+                    password: password1
                 }).then(res=>{
                     setFormData({...formData,
                         name: '',
@@ -36,6 +39,7 @@ import { Redirect } from 'react-router-dom'
 
                     toast.success(res.data.message)
                 }).catch(err => {
+                    console.log('error');
                     toast.error(err.response.data.error)
                 })
              }else {
