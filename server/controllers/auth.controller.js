@@ -10,13 +10,14 @@ const {errorHandler} = require('../helpers/dbErrorhandling')
 
 //* Use sendgrid to send email
 const sgMail = require('@sendgrid/mail')
+sgMail.setApiKey(process.env.MAIL_KEY)
 
 exports.registerController = (req, res) => {
-    const {name, email, password } = req.body
-    const errors = validationResult(req)
+    const {name, email, password } = req.body;
+    const errors = validationResult(req);
 
 
-    //*Validatiom to req,body
+    //*Validation to req,body
     if (!errors.isEmpty()){
         const firstError = errors.array().map(error => error.msg)[0]
         return res.status(422).json({
@@ -42,14 +43,36 @@ exports.registerController = (req, res) => {
         },
         process.env.JWT_ACCOUNT_ACTIVATION,
         {
-            expiresIn: '15m'
+            expiresIn: '5m'
         }
     )
     //* Email Data Sending
     const emailData = {
         from: process.env.EMAIL_FROM,
-        to: to,
+        to: email,
         subject: 'Account activation link',
+        html: `
+            <h1>Please Click link to activate</h1>
+            <p>${process.env.CLIENT_URL}/users/activate/${token}</p>
+            <hr/>
+            <p>This email contain sensitive information</p>
+            <p>${process.env.CLIENT_URL}</p>
+        `
     }
+    sgMail
+        .send(emailData)
+        .then(sent => {
+            return res.json({
+                message: `Email has been sent to ${email}`
+         })
+        })
+    .catch(err =>{
+        return res.status(400).json({
+            success: false,
+            error: errorHandler(err)
+            })
+        })
+
+
     }
 }
