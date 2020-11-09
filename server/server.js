@@ -3,11 +3,16 @@ const morgan = require('morgan')
 const bodyParser = require('body-parser')
 const cors = require('cors')
 
+const app = express()
+
 //*Config .env to ./config/config.env
 require('dotenv').config({
     path: './config/config.env'
 })
-const app = express()
+
+//*Use bodyParser
+app.use(bodyParser.json())
+
 
 //*Config for only development
 if(process.env.NODE_ENV === 'development'){
