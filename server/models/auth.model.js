@@ -34,14 +34,14 @@ const userSchema = new mongoose.Schema({
 
 //*Vitual Password
 userSchema.virtual('password')
-    .set(function(password){
-        this.password = password
-        this.salt = this.makeSalt()
-        this.hashed_password = this.encryptPassword(password)
+    .set(function (password) {
+        this._password = password;
+        this.salt = this.makeSalt();
+        this.hashed_password = this.encryptPassword(password);
     })
-    .get(function(){
-        return this.password
-    })
+    .get(function () {
+        return this._password;
+    });
 
 
 //*methods
@@ -51,15 +51,15 @@ userSchema.methods = {
         return Math.round(new Date().valueOf()* Math.random()) + ''
     },
     //Encrpt Password
-    encyptPassword: function(password){
-        if (!password) return ''
-        try{
+    encryptPassword: function (password) {
+        if (!password) return '';
+        try {
             return crypto
-                .createHmac('sha1'.this.salt)
+                .createHmac('sha1', this.salt)
                 .update(password)
-                .digest('hex')
-        }catch (err){
-            return ''
+                .digest('hex');
+        } catch (err) {
+            return '';
         }
     },
     //*compare password between plain get from user and hashed

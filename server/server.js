@@ -30,22 +30,22 @@ if(process.env.NODE_ENV === 'development'){
 
     app.use(morgan('dev'))
     //* Morgan give information about each request 
-    //* Cors it allowa to deal with react for localhost at port 3000 without any problem
+    //* Cors it allows to deal with react for localhost at port 3000 without any problem
 }
 
 //* Load all route
 const authRouter = require('./routes/auth.route')
 
 //*Use Routes
-app.use('/api/', authRouter); 
+app.use('/api', authRouter); 
 
-app.use((req, res, next) => {
+app.use((req, res,) => {
     res.status(404).json({
         success: false,
         message: "Page Not Found"
     })
 })
-const PORT = process.env.PORT
+const PORT = process.env.PORT || 5000
 
 app.listen(PORT, () => {
     console.log(`App listening on port ${PORT}`)

@@ -5,6 +5,10 @@ import App from './App';
 import reportWebVitals from './reportWebVitals';
 import Register  from './Screens/Register';
 import 'react-toastify/dist/ReactToastify.css';
+import Activate from './Screens/Activate';
+import Login from './Screens/Login';
+import ForgotPassword from './Screens/ForgotPassword';
+import ResetPassword from './Screens/ResetPassword';
 
 
 
@@ -14,6 +18,10 @@ ReactDOM.render(
     <Switch>
         <Route path='/' exact render={props => <App {...props} />} />
         <Route path='/register' exact render={props => <Register {...props} />} />
+        <Route path='/login' exact render={props => <Login {...props} />} />
+        <Route path='/users/password/forgot' exact render={props => <ForgotPassword {...props} />} />
+        <Route path='/users/password/reset' exact render={props => <ResetPassword {...props} />} />
+        <Route path='/users/activate/:token' exact render={props => <Activate {...props} />} />
     </Switch>
     </BrowserRouter>
   </React.StrictMode>,

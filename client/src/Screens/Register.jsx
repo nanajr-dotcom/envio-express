@@ -39,7 +39,7 @@ import { Redirect } from 'react-router-dom'
 
                     toast.success(res.data.message)
                 }).catch(err => {
-                    console.log('error');
+                    console.log(err);
                     toast.error(err.response.data.error)
                 })
              }else {
@@ -109,7 +109,7 @@ import { Redirect } from 'react-router-dom'
                                 <a 
                                     className='w-full max-w-xs font-bold shadow-sm rounded-lg py-3
            bg-indigo-100 text-gray-800 flex items-center justify-center transition-all duration-300 ease-in-out focus:outline-none hover:shadow focus:shadow-sm focus:shadow-outline mt-5'
-                                href='/'
+                                href='/login'
                                 >Sign In</a>
                             </div>
                         </form>
