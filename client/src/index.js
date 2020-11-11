@@ -1,6 +1,7 @@
 import React from 'react';
 import ReactDOM from 'react-dom';
 import {BrowserRouter, Route, Redirect, Switch} from 'react-router-dom';
+import './index.css'
 import App from './App';
 import reportWebVitals from './reportWebVitals';
 import Register  from './Screens/Register';
@@ -9,11 +10,13 @@ import Activate from './Screens/Activate';
 import Login from './Screens/Login';
 import ForgotPassword from './Screens/ForgotPassword';
 import ResetPassword from './Screens/ResetPassword';
+import { ThemeProvider } from './Components/ThemeContext';
 
 
 
 ReactDOM.render(
   <React.StrictMode>
+    <ThemeProvider>
     <BrowserRouter>
     <Switch>
         <Route path='/' exact render={props => <App {...props} />} />
@@ -24,6 +27,7 @@ ReactDOM.render(
         <Route path='/users/activate/:token' exact render={props => <Activate {...props} />} />
     </Switch>
     </BrowserRouter>
+    </ThemeProvider>
   </React.StrictMode>,
   document.getElementById('root')
 );

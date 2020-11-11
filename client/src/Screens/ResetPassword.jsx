@@ -2,7 +2,14 @@ import React, { useState, useEffect } from 'react';
 import authSvg from '../assets/auth.svg';
 import { ToastContainer, toast } from 'react-toastify';
 import axios from 'axios';
+import { useTheme } from '../Components/ThemeContext';
+import Darkmodebutton from '../Components/Darkmodebutton';
 const ResetPassword = ({ match }) => {
+    const darkTheme = useTheme()
+    const themeStyles = {
+        backgroundColor: darkTheme ? '#333' : '#f7fafc',
+        color: darkTheme ? '#f7fafc' : '#333'
+    }
     const [formData, setFormData] = useState({
         password1: '',
         password2: '',
@@ -49,9 +56,10 @@ const ResetPassword = ({ match }) => {
         }
     };
     return (
-        <div className='min-h-screen bg-gray-100 text-gray-900 flex justify-center'>
+        <div className='min-h-screen bg-gray-100 text-gray-900 flex justify-center'style={themeStyles}>
             <ToastContainer />
-            <div className='max-w-screen-xl m-0 sm:m-20 bg-white shadow sm:rounded-lg flex justify-center flex-1'>
+            <div className='max-w-screen-xl m-0 sm:m-20 bg-white shadow sm:rounded-lg flex justify-center flex-1'style={themeStyles}>
+                <Darkmodebutton/>
                 <div className='lg:w-1/2 xl:w-5/12 p-6 sm:p-12'>
                     <div className='mt-12 flex flex-col items-center'>
                         <h1 className='text-2xl xl:text-3xl font-extrabold'>

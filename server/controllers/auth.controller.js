@@ -1,5 +1,7 @@
 const User = require('../models/auth.model')
-const expressJwt = require('express-jwt')
+const expressJwt
+///({secret: process.env.JWT_SECRET, algorithms: ['sha1', 'RS256', 'HS256']}) 
+= require('express-jwt')
 const _ = require('lodash')
 const { OAuth2Client } = require('google-auth-library')
 const fetch = require('node-fetch')
@@ -198,6 +200,30 @@ exports.loginController = (req, res) => {
     }
 };
 
+//*Adminlogin
+exports.requireSignin = expressJwt({secret: process.env.JWT_SECRET, algorithms: ['sha1', 'RS256', 'HS256']});
+
+exports.adminMiddleware = (req, res, next) => {
+    User.findById({
+        _id: req.user._id
+    }).exec((err, user) => {
+        if (err || !user) {
+            return res.status(400).json({
+                error: 'User not found'
+            });
+        }
+
+        if (user.role !== 'admin') {
+            return res.status(400).json({
+                error: 'Admin resource. Access denied.'
+            });
+        }
+
+        req.profile = user;
+        next();
+    });
+};
+
 //* Forgot Password
 exports.forgotPasswordController = (req, res) => {
     const { email } = req.body;
@@ -388,4 +414,66 @@ exports.googleController = (req, res) => {
                 });
             }
         });
+};
+
+
+//*FacebookLogin
+exports.facebookController = (req, res) => {
+    console.log('FACEBOOK LOGIN REQ BODY', req.body);
+    const { userID, accessToken } = req.body;
+    //Get id and token from React
+    const url = `https://graph.facebook.com/v2.11/${userID}/?fields=id,name,email&access_token=${accessToken}`;
+    //get from facebook
+    return (
+        fetch(url, {
+            method: 'GET'
+        })
+            .then(response => response.json())
+            // .then(response => console.log(response))
+            .then(response => {
+                //Get email and password from facebook
+                const { email, name } = response;
+                User.findOne({ email }).exec((err, user) => {
+                    //Check if this account with this email already exists
+                    if (user) {
+                        const token = jwt.sign({ _id: user._id }, process.env.JWT_SECRET, {
+                            expiresIn: '7d'
+                        });
+                        const { _id, email, name, role } = user;
+                        return res.json({
+                            token,
+                            user: { _id, email, name, role }
+                        });
+                    } else {
+                        //generate password and save to database as new user
+                        let password = email + process.env.JWT_SECRET;
+                        user = new User({ name, email, password });
+                        user.save((err, data) => {
+                            if (err) {
+                                console.log('ERROR FACEBOOK LOGIN ON USER SAVE', err);
+                                return res.status(400).json({
+                                    error: 'User signup failed with facebook'
+                                });
+                            }
+                            //if no error
+                            const token = jwt.sign(
+                                { _id: data._id },
+                                process.env.JWT_SECRET,
+                                { expiresIn: '7d' }
+                            );
+                            const { _id, email, name, role } = data;
+                            return res.json({
+                                token,
+                                user: { _id, email, name, role }
+                            });
+                        });
+                    }
+                });  
+            })
+            .catch(error => {
+                res.json({
+                    error: 'Facebook login failed. Try later'
+                });
+            })
+    );
 };

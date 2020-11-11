@@ -1,0 +1,38 @@
+
+.toggle__dot {
+  top: -.25rem;
+  left: -.25rem;
+  transition: all 0.3s ease-in-out;
+}
+
+input:checked ~ .toggle__dot {
+  transform: translateX(100%);
+  background-color: #667eea;
+}
+
+.dark-mode-switcher{
+    margin: 0 20px 20px 0;
+    width: 120px;
+}
+
+.bg-sidebar{
+   background: #3d68ff; 
+  }
+.cta-btn{ 
+  color: #3d68ff; 
+}
+.upgrade-btn{ 
+  background: #1947ee; 
+}
+.upgrade-btn:hover{
+   background: #0038fd; 
+}
+.active-nav-link{ 
+  background: #1947ee; 
+}
+.nav-item:hover{ 
+  background: #1947ee;
+ }
+.account-link:hover {
+   background: #3d68ff; 
+}

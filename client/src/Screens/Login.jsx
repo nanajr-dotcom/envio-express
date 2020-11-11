@@ -6,18 +6,28 @@ import axios from 'axios'
 import { Link, Redirect } from 'react-router-dom'
 import { GoogleLogin } from 'react-google-login';
 import FacebookLogin from 'react-facebook-login/dist/facebook-login-render-props';
+import Darkmodebutton from '../Components/Darkmodebutton';
+import { useTheme } from '../Components/ThemeContext';
 
 const Login = ({ history }) => {
+    const darkTheme = useTheme()
+    const themeStyles = {
+        backgroundColor: darkTheme ? '#333' : '#f7fafc',
+        color: darkTheme ? '#f7fafc' : '#333'
+    }
+
     const [formData, setFormData] = useState({
         email: '',
         password1: '',
         textChange: 'Sign In'
     });
     const { email, password1, textChange } = formData;
+    //handle change from inputs
     const handleChange = text => e => {
         setFormData({ ...formData, [text]: e.target.value });
     };
 
+    //send Google Token
     const sendGoogleToken = tokenId => {
         axios
             .post(`${process.env.REACT_APP_API_URL}/googlelogin`, {
@@ -31,6 +41,8 @@ const Login = ({ history }) => {
                 console.log('GOOGLE SIGNIN ERROR', error.response);
             });
     };
+
+    //If success authenticate user and redirect
     const informParent = response => {
         authenticate(response, () => {
             isAuth() && isAuth().role === 'admin'
@@ -38,7 +50,9 @@ const Login = ({ history }) => {
                 : history.push('/private');
         });
     };
+    
 
+    //Send Facebook Token
     const sendFacebookToken = (userID, accessToken) => {
         axios
             .post(`${process.env.REACT_APP_API_URL}/facebooklogin`, {
@@ -50,14 +64,16 @@ const Login = ({ history }) => {
                 informParent(res);
             })
             .catch(error => {
-                console.log('GOOGLE SIGNIN ERROR', error.response);
+                console.log('FACEBOOK SIGNIN ERROR', error.response);
             });
     };
+
+    //Get response from Google
     const responseGoogle = response => {
         console.log(response);
         sendGoogleToken(response.tokenId);
     };
-
+    //Get response from Facebook
     const responseFacebook = response => {
         console.log(response);
         sendFacebookToken(response.userID, response.accessToken)
@@ -102,10 +118,13 @@ const Login = ({ history }) => {
     }
 };
     return (
-        <div className='min-h-screen bg-gray-100 text-gray-900 flex justify-center'>
+        <div className='min-h-screen bg-gray-100 text-gray-900 flex justify-center'
+        style={themeStyles}>
             {isAuth() ? <Redirect to='/' /> : null}
             <ToastContainer />
-            <div className='max-w-screen-xl m-0 sm:m-20 bg-white shadow sm:rounded-lg flex justify-center flex-1'>
+            <div className='max-w-screen-xl m-0 sm:m-20 bg-white shadow sm:rounded-lg flex justify-center flex-1'
+            style={themeStyles}>
+                <Darkmodebutton/>
                 <div className='lg:w-1/2 xl:w-5/12 p-6 sm:p-12'>
                     <div className='mt-12 flex flex-col items-center'>
                         <h1 className='text-2xl xl:text-3xl font-extrabold'>
@@ -130,7 +149,7 @@ const Login = ({ history }) => {
                                             <span className='ml-4'>Sign In with Google</span>
                                         </button>
                                     )}
-                                ></GoogleLogin>
+                                />
                                 <FacebookLogin
                                     appId={`${process.env.REACT_APP_FACEBOOK_CLIENT}`}
                                     autoLoad={false}
@@ -159,7 +178,7 @@ const Login = ({ history }) => {
                                 </a>
                             </div>
                             <div className='my-12 border-b text-center'>
-                                <div className='leading-none px-2 inline-block text-sm text-gray-600 tracking-wide font-medium bg-white transform translate-y-1/2'>
+                                <div className='leading-none px-2 inline-block text-sm text-gray-600 tracking-wide font-medium bg-white transform translate-y-1/2' style={themeStyles}>
                                     Or sign In with e-mail
                 </div>
                             </div>

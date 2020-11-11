@@ -4,8 +4,14 @@ import { ToastContainer, toast } from 'react-toastify'
 import { authenticate, isAuth } from '../helpers/auth'
 import axios from 'axios'
 import { Redirect } from 'react-router-dom'
-
+import { useTheme } from '../Components/ThemeContext';
+import Darkmodebutton from '../Components/Darkmodebutton';
  const Register = () => {
+       const darkTheme = useTheme()
+    const themeStyles = {
+        backgroundColor: darkTheme ? '#333' : '#f7fafc',
+        color: darkTheme ? '#f7fafc' : '#333'
+    }
      const [formData, setFormData] = useState({
          name:'',
          email: '',
@@ -51,10 +57,11 @@ import { Redirect } from 'react-router-dom'
          }
      }
     return (
-        <div className='min-h-screen bg-gray-100 text-gray-900 flex justify-center'>
+        <div className='min-h-screen bg-gray-100 text-gray-900 flex justify-center'style={themeStyles}>
             {isAuth()? <Redirect to='/'/>:null}
             <ToastContainer/>
-            <div className='max-w-screen-xl m-0 sm:m-20 bg-white shadow sm:rounded-lg flex justify-center flex-1'>
+            <div className='max-w-screen-xl m-0 sm:m-20 bg-white shadow sm:rounded-lg flex justify-center flex-1'style={themeStyles}>
+                <Darkmodebutton/>
                 <div className= 'lg:w-1/2 xl:5/12 p-6 sm:p-12'>
                     <div className= 'mt-12 flex flex-col items-center'>
                         <h1 className='text-2xl xl:text-3xl font-extrabold'>
@@ -101,7 +108,7 @@ import { Redirect } from 'react-router-dom'
                                 </button>
                             </div>
                             <div className="my-12 border-b text-center">
-                                <div className='leading-none px-2 inline-block text-sm text-gray-600 tracking-wide font-medium bg-white transform translate-y-1/2'>
+                                <div className='leading-none px-2 inline-block text-sm text-gray-600 tracking-wide font-medium bg-white transform translate-y-1/2'style={themeStyles}>
                                     Or signin with email or social login
                                 </div>
                             </div>
