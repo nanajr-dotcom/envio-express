@@ -17,107 +17,99 @@ const Login = ({ history }) => {
         color: darkTheme ? '#f7fafc' : '#333'
     }
 
-    const [formData, setFormData] = useState({
-        email: '',
-        password1: '',
-        textChange: 'Sign In'
+     const [formData, setFormData] = useState({
+    email: '',
+    password1: '',
+    textChange: 'Sign In'
+  });
+  const { email, password1, textChange } = formData;
+  const handleChange = text => e => {
+    setFormData({ ...formData, [text]: e.target.value });
+  };
+
+  const sendGoogleToken = tokenId => {
+    axios
+      .post(`${process.env.REACT_APP_API_URL}/googlelogin`, {
+        idToken: tokenId
+      })
+      .then(res => {
+        console.log(res.data);
+        informParent(res);
+      })
+      .catch(error => {
+        console.log('GOOGLE SIGNIN ERROR', error.response);
+      });
+  };
+  const informParent = response => {
+    authenticate(response, () => {
+      isAuth() && isAuth().role === 'admin'
+        ? history.push('/admin')
+        : history.push('/admindashboard');
     });
-    const { email, password1 } = formData;
-    //handle change from inputs
-    const handleChange = text => e => {
-        setFormData({ ...formData, [text]: e.target.value });
-    };
+  };
 
-    //send Google Token
-    const sendGoogleToken = tokenId => {
-        axios
-            .post(`${process.env.REACT_APP_API_URL}/googlelogin`, {
-                idToken: tokenId
-            })
-            .then(res => {
-                console.log(res.data);
-                informParent(res);
-            })
-            .catch(error => {
-                console.log('GOOGLE SIGNIN ERROR', error.response);
-            });
-    };
+  const sendFacebookToken = (userID, accessToken) => {
+    axios
+      .post(`${process.env.REACT_APP_API_URL}/facebooklogin`, {
+        userID,
+        accessToken
+      })
+      .then(res => {
+        console.log(res.data);
+        informParent(res);
+      })
+      .catch(error => {
+        console.log('GOOGLE SIGNIN ERROR', error.response);
+      });
+  };
+  const responseGoogle = response => {
+    console.log(response);
+    sendGoogleToken(response.tokenId);
+  };
 
-    //If success authenticate user and redirect
-    const informParent = response => {
-        authenticate(response, () => {
-            isAuth() && isAuth().role === 'admin'
-                ? history.push('/admin')
-                : history.push('/client');
-        });
-    };
-    
+  const responseFacebook = response => {
+    console.log(response);
+    sendFacebookToken(response.userID, response.accessToken)
+  };
 
-    //Send Facebook Token
-    const sendFacebookToken = (userID, accessToken) => {
-        axios
-            .post(`${process.env.REACT_APP_API_URL}/facebooklogin`, {
-                userID,
-                accessToken
-            })
-            .then(res => {
-                console.log(res.data);
-                informParent(res);
-            })
-            .catch(error => {
-                console.log('FACEBOOK SIGNIN ERROR', error.response);
-            });
-    };
-
-    //Get response from Google
-    const responseGoogle = response => {
-        console.log(response);
-        sendGoogleToken(response.tokenId);
-    };
-    //Get response from Facebook
-    const responseFacebook = response => {
-        console.log(response);
-        sendFacebookToken(response.userID, response.accessToken)
-    };
-
-    const handleSubmit = e => {
+  const handleSubmit = e => {
     console.log(process.env.REACT_APP_API_URL);
     e.preventDefault();
     if (email && password1) {
-        setFormData({ ...formData, textChange: 'Submitting' });
-        axios
-            .post(`${process.env.REACT_APP_API_URL}/login`, {
-                email,
-                password: password1
-            })
-            .then(res => {
-                authenticate(res, () => {
-                    setFormData({
-                        ...formData,
-                        email: '',
-                        password1: '',
-                        textChange: 'Submitted'
-                    });
-                    isAuth() && isAuth().role === 'admin'
-                        ? history.push('/admin')
-                        : history.push('/client');
-                    toast.success(`Hey ${res.data.user.name}, Welcome back!`);
-                });
-            })
-            .catch(err => {
-                setFormData({
-                    ...formData,
-                    email: '',
-                    password1: '',
-                    textChange: 'Sign In'
-                });
-                console.log(err.response);
-                toast.error(err.response.data.errors);
+      setFormData({ ...formData, textChange: 'Submitting' });
+      axios
+        .post(`${process.env.REACT_APP_API_URL}/login`, {
+          email,
+          password: password1
+        })
+        .then(res => {
+          authenticate(res, () => {
+            setFormData({
+              ...formData,
+              email: '',
+              password1: '',
+              textChange: 'Submitted'
             });
+            isAuth() && isAuth().role === 'admin'
+              ? history.push('/admin')
+              : history.push('/admindashboard');
+            toast.success(`Hey ${res.data.user.name}, Welcome back!`);
+          });
+        })
+        .catch(err => {
+          setFormData({
+            ...formData,
+            email: '',
+            password1: '',
+            textChange: 'Sign In'
+          });
+          console.log(err.response);
+          toast.error(err.response.data.errors);
+        });
     } else {
-        toast.error('Please fill all fields');
+      toast.error('Please fill all fields');
     }
-};
+  };
     return (
         <div className='min-h-screen bg-gray-100 text-gray-900 flex justify-center'
         style={themeStyles}>

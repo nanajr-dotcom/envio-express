@@ -13,6 +13,8 @@ import ResetPassword from './Screens/ResetPassword';
 import { ThemeProvider } from './Components/Context/ThemeContext';
 import { Windmill } from '@windmill/react-ui'
 import { SidebarProvider } from './Components/Context/SidebarContext'
+import AdminDashboard from './Screens/AdminDashboard';
+
 
 
 
@@ -29,6 +31,8 @@ ReactDOM.render(
         <Route path='/users/password/forgot' exact render={props => <ForgotPassword {...props} />} />
         <Route path='/users/password/reset' exact render={props => <ResetPassword {...props} />} />
         <Route path='/users/activate/:token' exact render={props => <Activate {...props} />} />
+     <Route path='/admindashboard' exact render={props => <AdminDashboard {...props} />} />
+        
     </Switch>
     </BrowserRouter>
     </SidebarProvider>

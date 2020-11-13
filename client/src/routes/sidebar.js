@@ -14,32 +14,32 @@ const routes = [
   {
     path: '/app/forms',
     icon: 'FormsIcon',
-    name: 'Forms',
+    name: 'Users',
   },
   {
     path: '/app/cards',
     icon: 'CardsIcon',
-    name: 'Cards',
+    name: 'Agents',
   },
   {
     path: '/app/charts',
     icon: 'ChartsIcon',
-    name: 'Charts',
+    name: 'Project',
   },
   {
     path: '/app/buttons',
     icon: 'ButtonsIcon',
-    name: 'Buttons',
+    name: 'Invoice',
   },
   {
     path: '/app/modals',
     icon: 'ModalsIcon',
-    name: 'Modals',
+    name: 'Upload',
   },
   {
     path: '/app/tables',
     icon: 'TablesIcon',
-    name: 'Tables',
+    name: 'Payments',
   },
   {
     icon: 'PagesIcon',

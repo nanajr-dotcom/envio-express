@@ -3,14 +3,16 @@ import routes from '../../routes/sidebar'
 import { NavLink, Route } from 'react-router-dom'
 import * as Icons from '../icons'
 import SidebarSubmenu from './SidebarSubmenu'
-import { Button } from '@windmill/react-ui'
+import { signout } from '../../helpers/auth';
+import { ToastContainer,  toast } from 'react-toastify';
+
 
 function Icon({ icon, ...props }) {
   const Icon = Icons[icon]
   return <Icon {...props} />
 }
 
-function SidebarContent() {
+function SidebarContent({ history }) {
   return (
     <div className="py-4 text-gray-500 dark:text-gray-400">
       <a className="ml-6 text-lg font-bold text-gray-800 dark:text-gray-200" href="#">
@@ -42,12 +44,21 @@ function SidebarContent() {
         )}
       </ul>
       <div className="px-6 my-6">
-        <Button>
-          Create account
-          <span className="ml-2" aria-hidden="true">
-            +
-          </span>
-        </Button>
+        <button
+        onClick={() => {
+                    signout(() => {
+                      toast.error('Signout Successfully');
+                      history.push('/');
+                    });
+                  }}
+          
+          className='mt-5 tracking-wide font-semibold bg-purple-600 text-gray-100 w-full py-4 rounded-lg hover:bg-indigo-700 transition-all duration-300 ease-in-out flex items-center justify-center focus:shadow-outline focus:outline-none'
+          >
+        
+          Sign Out
+          
+        </button>
+         <ToastContainer />
       </div>
     </div>
   )

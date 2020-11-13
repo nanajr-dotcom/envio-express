@@ -53,7 +53,7 @@ function LandingPage() {
   <div className="text-center w-full pb-16">
   <h3 className="uppercase text-gray-800">Why choose my app?</h3>
   <p className="sm:text-3xl text-2xl text-black-800 pt-4 xl:w-1/2 mx-auto">
-    A simpleway to track and manage your freight and logistics until final day of delivery.
+    Your convenient partner to track and manage your freight and logistics until final day of delivery.
   </p>
 </div>
 
