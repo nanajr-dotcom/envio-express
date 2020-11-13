@@ -1,5 +1,5 @@
 import React, { useState, useEffect } from 'react';
-import authSvg from '../assets/auth.svg';
+import custom from '../assets/img/customs-clearance.jpg';
 import { ToastContainer, toast } from 'react-toastify';
 import axios from 'axios';
 import { useTheme } from '../Components/Context/ThemeContext';
@@ -16,7 +16,7 @@ const ResetPassword = ({ match }) => {
         token: '',
         textChange: 'Submit'
     });
-    const { password1, password2, textChange, token } = formData;
+    const { password1, password2, token } = formData;
 
     useEffect(() => {
         let token = match.params.token
@@ -96,11 +96,10 @@ const ResetPassword = ({ match }) => {
                         </div>
                     </div>
                 </div>
-                <div className='flex-1 bg-indigo-100 text-center hidden lg:flex'>
-                    <div
-                        className='m-12 xl:m-16 w-full bg-contain bg-center bg-no-repeat'
-                        style={{ backgroundImage: `url(${authSvg})` }}
-                    ></div>
+                 <div className='flex-1 bg-indigo-100 text-center hidden lg:flex'
+                style={{ backgroundImage: `url(${custom})` }}
+                >
+                    
                 </div>
             </div>
       ;

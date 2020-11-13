@@ -42,3 +42,18 @@ input:checked ~ .toggle__dot {
 .account-link:hover {
    background: #3d68ff; 
 }
+
+.envio{
+  display: flex;
+  margin: 10px 10px 10px 80px
+}
+
+.envioholder{
+  width: 1700px;
+  margin: 40px 40px 40px 250px !important;
+}
+
+.slanted{
+  height: 400px;
+  
+}

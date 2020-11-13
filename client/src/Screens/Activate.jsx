@@ -1,10 +1,10 @@
 import React, { useState, useEffect } from 'react';
-import authSvg from '../assets/auth.svg';
+import custom from '../assets/img/customs-clearance.jpg';
 import { ToastContainer, toast } from 'react-toastify';
 import axios from 'axios';
 import jwt from 'jsonwebtoken';
-import { authenticate, isAuth } from '../helpers/auth';
-import { Link, Redirect } from 'react-router-dom';
+import {  isAuth } from '../helpers/auth';
+import {  Redirect } from 'react-router-dom';
 import { useTheme } from '../Components/Context/ThemeContext'
 import Darkmodebutton from '../Components/Darkmodebutton';
 
@@ -30,7 +30,7 @@ const Activate = ({ match }) => {
 
         console.log(token, name);
     }, [match.params]);
-    const { name, token, show } = formData;
+    const { name, token } = formData;
 
     const handleSubmit = e => {
         e.preventDefault();
@@ -97,11 +97,10 @@ const Activate = ({ match }) => {
                         </form>
                     </div>
                 </div>
-                <div className='flex-1 bg-indigo-100 text-center hidden lg:flex'>
-                    <div
-                        className='m-12 xl:m-16 w-full bg-contain bg-center bg-no-repeat'
-                        style={{ backgroundImage: `url(${authSvg})` }}
-                    ></div>
+                <div className='flex-1 bg-indigo-100 text-center hidden lg:flex'
+                style={{ backgroundImage: `url(${custom})` }}
+                >
+                    
                 </div>
             </div>
       

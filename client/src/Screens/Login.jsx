@@ -1,5 +1,6 @@
 import React, { useState } from 'react'
-import authSvg from '../assets/auth.svg';
+//import authSvg from '../assets/auth.svg';
+import custom from '../assets/img/customs-clearance.jpg';
 import { ToastContainer, toast } from 'react-toastify'
 import { authenticate, isAuth } from '../helpers/auth'
 import axios from 'axios'
@@ -21,7 +22,7 @@ const Login = ({ history }) => {
         password1: '',
         textChange: 'Sign In'
     });
-    const { email, password1, textChange } = formData;
+    const { email, password1 } = formData;
     //handle change from inputs
     const handleChange = text => e => {
         setFormData({ ...formData, [text]: e.target.value });
@@ -47,7 +48,7 @@ const Login = ({ history }) => {
         authenticate(response, () => {
             isAuth() && isAuth().role === 'admin'
                 ? history.push('/admin')
-                : history.push('/private');
+                : history.push('/client');
         });
     };
     
@@ -99,7 +100,7 @@ const Login = ({ history }) => {
                     });
                     isAuth() && isAuth().role === 'admin'
                         ? history.push('/admin')
-                        : history.push('/private');
+                        : history.push('/client');
                     toast.success(`Hey ${res.data.user.name}, Welcome back!`);
                 });
             })
@@ -217,11 +218,10 @@ const Login = ({ history }) => {
                         </div>
                     </div>
                 </div>
-                <div className='flex-1 bg-indigo-100 text-center hidden lg:flex'>
-                    <div
-                        className='m-12 xl:m-16 w-full bg-contain bg-center bg-no-repeat'
-                        style={{ backgroundImage: `url(${authSvg})` }}
-                    ></div>
+                <div className='flex-1 bg-indigo-100 text-center hidden lg:flex'
+                style={{ backgroundImage: `url(${custom})` }}
+                >
+                    
                 </div>
             </div>
       
