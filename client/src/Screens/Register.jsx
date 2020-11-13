@@ -4,7 +4,7 @@ import { ToastContainer, toast } from 'react-toastify'
 import { authenticate, isAuth } from '../helpers/auth'
 import axios from 'axios'
 import { Redirect } from 'react-router-dom'
-import { useTheme } from '../Components/ThemeContext';
+import { useTheme } from '../Components/Context/ThemeContext';
 import Darkmodebutton from '../Components/Darkmodebutton';
  const Register = () => {
        const darkTheme = useTheme()

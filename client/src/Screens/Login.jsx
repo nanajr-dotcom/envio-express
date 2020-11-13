@@ -7,7 +7,7 @@ import { Link, Redirect } from 'react-router-dom'
 import { GoogleLogin } from 'react-google-login';
 import FacebookLogin from 'react-facebook-login/dist/facebook-login-render-props';
 import Darkmodebutton from '../Components/Darkmodebutton';
-import { useTheme } from '../Components/ThemeContext';
+import { useTheme } from '../Components/Context/ThemeContext';
 
 const Login = ({ history }) => {
     const darkTheme = useTheme()
@@ -130,7 +130,7 @@ const Login = ({ history }) => {
                         <h1 className='text-2xl xl:text-3xl font-extrabold'>
                             Sign In for Envio Express
             </h1>
-                        <div className='w-full flex-1 mt-8 text-indigo-500'>
+                        <div className='w-full flex-1 mt-8 text-purple-600'>
                             <div className='flex flex-col items-center'>
                                 <GoogleLogin
                                     clientId={`${process.env.REACT_APP_GOOGLE_CLIENT}`}
@@ -202,7 +202,7 @@ const Login = ({ history }) => {
                                 />
                                 <button
                                     type='submit'
-                                    className='mt-5 tracking-wide font-semibold bg-indigo-500 text-gray-100 w-full py-4 rounded-lg hover:bg-indigo-700 transition-all duration-300 ease-in-out flex items-center justify-center focus:shadow-outline focus:outline-none'
+                                    className='mt-5 tracking-wide font-semibold bg-purple-600 text-gray-100 w-full py-4 rounded-lg hover:bg-indigo-700 transition-all duration-300 ease-in-out flex items-center justify-center focus:shadow-outline focus:outline-none'
                                 >
                                     <i className='fas fa-sign-in-alt  w-6  -ml-2' />
                                     <span className='ml-3'>Sign In</span>

@@ -10,13 +10,17 @@ import Activate from './Screens/Activate';
 import Login from './Screens/Login';
 import ForgotPassword from './Screens/ForgotPassword';
 import ResetPassword from './Screens/ResetPassword';
-import { ThemeProvider } from './Components/ThemeContext';
+import { ThemeProvider } from './Components/Context/ThemeContext';
+import { Windmill } from '@windmill/react-ui'
+import { SidebarProvider } from './Components/Context/SidebarContext'
 
 
 
 ReactDOM.render(
   <React.StrictMode>
+    <Windmill>
     <ThemeProvider>
+      <SidebarProvider>
     <BrowserRouter>
     <Switch>
         <Route path='/' exact render={props => <App {...props} />} />
@@ -27,7 +31,9 @@ ReactDOM.render(
         <Route path='/users/activate/:token' exact render={props => <Activate {...props} />} />
     </Switch>
     </BrowserRouter>
+    </SidebarProvider>
     </ThemeProvider>
+    </Windmill>
   </React.StrictMode>,
   document.getElementById('root')
 );

@@ -1,4 +1,10 @@
 
+@import "tailwindcss/base";
+
+@import "tailwindcss/components";
+
+@import "tailwindcss/utilities";
+
 .toggle__dot {
   top: -.25rem;
   left: -.25rem;

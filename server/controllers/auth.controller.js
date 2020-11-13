@@ -15,6 +15,7 @@ const {errorHandler} = require('../helpers/dbErrorhandling')
 const sgMail = require('@sendgrid/mail')
 sgMail.setApiKey(process.env.MAIL_KEY)
 
+//*Register
 exports.registerController = (req, res) => {
     const { name, email, password } = req.body;
     const errors = validationResult(req);

@@ -5,7 +5,7 @@ import axios from 'axios';
 import jwt from 'jsonwebtoken';
 import { authenticate, isAuth } from '../helpers/auth';
 import { Link, Redirect } from 'react-router-dom';
-import { useTheme } from '../Components/ThemeContext'
+import { useTheme } from '../Components/Context/ThemeContext'
 import Darkmodebutton from '../Components/Darkmodebutton';
 
 const Activate = ({ match }) => {

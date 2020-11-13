@@ -2,7 +2,7 @@ import React, { useState, useEffect } from 'react';
 import authSvg from '../assets/auth.svg';
 import { ToastContainer, toast } from 'react-toastify';
 import axios from 'axios';
-import { useTheme } from '../Components/ThemeContext';
+import { useTheme } from '../Components/Context/ThemeContext';
 import Darkmodebutton from '../Components/Darkmodebutton';
 const ResetPassword = ({ match }) => {
     const darkTheme = useTheme()

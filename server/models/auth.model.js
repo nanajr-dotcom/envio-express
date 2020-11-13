@@ -22,11 +22,22 @@ const userSchema = new mongoose.Schema({
     salt: String,
     role:{
         type: String,
-        default: 'Normal'
+        enum: ['SuperAdmin', 'employees','client'],
+        default: 'client'
     },
     resetPasswordLink: {
         data: String,
         default: ''
+    },
+    phonenumber: {
+        type: String,
+        required: true,
+
+    },
+    address: {
+        type: String,
+        required: false,
+
     }
 
 }, {timeStamp: true})
